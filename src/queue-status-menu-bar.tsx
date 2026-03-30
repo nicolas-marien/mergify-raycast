@@ -15,7 +15,7 @@ export default function Command() {
   const tooltip = `Mergify queue for ${preferences.owner}/${preferences.repository}`;
 
   return (
-    <MenuBarExtra title={menuBarTitle} icon={Icon.List} tooltip={tooltip} isLoading={isLoading}>
+    <MenuBarExtra title={menuBarTitle} icon={Icon.Train} tooltip={tooltip} isLoading={isLoading}>
       {error ? (
         <MenuBarExtra.Item title="Unable to load queue" subtitle={getErrorMessage(error)} icon={Icon.ExclamationMark} />
       ) : null}
@@ -46,20 +46,20 @@ export default function Command() {
 
       {!error
         ? batches.map((batch) => (
-            <MenuBarExtra.Section key={batch.name} title={`Batch ${batch.name}`}>
-              {batch.pull_requests.map((pullRequest) => (
-                <MenuBarExtra.Item
-                  key={`batch-${batch.name}-${pullRequest.number}`}
-                  title={`#${pullRequest.number} ${pullRequest.title}`}
-                  subtitle={formatMenuItemSubtitle(
-                    pullRequest.author?.login,
-                    formatMergeEta(pullRequest.estimated_merge_at ?? batch.estimated_merge_at ?? null),
-                  )}
-                  onAction={() => open(pullRequest.url)}
-                />
-              ))}
-            </MenuBarExtra.Section>
-          ))
+          <MenuBarExtra.Section key={batch.name} title={`Batch ${batch.name}`}>
+            {batch.pull_requests.map((pullRequest) => (
+              <MenuBarExtra.Item
+                key={`batch-${batch.name}-${pullRequest.number}`}
+                title={`#${pullRequest.number} ${pullRequest.title}`}
+                subtitle={formatMenuItemSubtitle(
+                  pullRequest.author?.login,
+                  formatMergeEta(pullRequest.estimated_merge_at ?? batch.estimated_merge_at ?? null),
+                )}
+                onAction={() => open(pullRequest.url)}
+              />
+            ))}
+          </MenuBarExtra.Section>
+        ))
         : null}
     </MenuBarExtra>
   );
